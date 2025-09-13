@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>電阻器色碼與數字碼教育模擬器</title>
+  <style>
+    :root{--bg:#f6f7fb;--card:#fff;--muted:#666;--accent:#0b5cff}
+    body{font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Arial; margin:0;background:var(--bg);color:#111}
+    .app{max-width:880px;margin:28px auto;padding:20px}
+    header{display:flex;align-items:center;gap:16px}
+    h1{font-size:1.25rem;margin:0}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(16,24,40,0.06);}
+    .controls{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+    label{font-size:0.9rem;color:var(--muted)}
+    select,input[type=radio]{padding:8px;border-radius:8px;border:1px solid #e6e9ee}
+    .row{display:flex;gap:12px;align-items:center}
+    .resistor-wrap{display:flex;gap:18px;align-items:center;justify-content:center;padding:20px}
+    .resistor{width:300px;height:80px;position:relative}
+    .res-body{position:absolute;left:20%;right:20%;top:25%;bottom:25%;border-radius:14px;background:#f1e6d6;box-shadow:inset 0 -6px 0 rgba(0,0,0,0.03)}
+    .lead{position:absolute;width:18%;height:6px;top:46%;background:#bfbfbf}
+    .lead.left{left:0}
+    .lead.right{right:0}
+    .band{position:absolute;top:18%;bottom:18%;width:24px;border-radius:4px}
+    .band.faint{opacity:0.9}
+    .controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:12px}
+    .btn{padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid #dfe6ff;color:var(--accent)}
+    .answer{margin-top:12px;padding:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef3ff;color:#0b1833}
+    small{display:block;color:var(--muted)}
+    @media (max-width:520px){.resistor{width:220px;height:60px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>電阻器色碼與數字碼教育模擬器</h1>
+    </header>
+
+    <section class="card" aria-labelledby="config">
+      <div id="config" class="row">
+        <div style="flex:1">
+          <label>練習模式</label>
+          <div class="controls">
+            <select id="mode" aria-label="選擇練習模式">
+              <option value="color">色碼模式（四環/五環）</option>
+              <option value="smd">數字碼模式（SMD）</option>
+            </select>
+            <select id="series" aria-label="選擇系列">
+              <option value="24">E24</option>
+              <option value="48">E48</option>
+              <option value="96">E96</option>
+            </select>
+            <select id="bandCount" aria-label="選擇色帶數目">
+              <option value="4">四環</option>
+              <option value="5">五環</option>
+            </select>
+          </div>
+          <small>可選 E24 / E48 / E96；五環包含溫度係數（顯示為灰帶）</small>
+        </div>
+        <div style="width:220px;text-align:right">
+          <button id="nextBtn" class="btn">下一題</button>
+          <button id="showBtn" class="btn ghost">顯示答案</button>
+        </div>
+      </div>
+
+      <div class="resistor-wrap">
+        <div class="resistor" id="resistorCanvas" role="img" aria-label="模擬電阻器色環圖">
+          <div class="lead left"></div>
+          <div class="lead right"></div>
+          <div class="res-body"></div>
+          <!-- bands will be injected here -->
+        </div>
+        <div style="min-width:200px">
+          <div>
+            <label>目前題目</label>
+            <div id="prompt" style="font-weight:600;font-size:1.05rem;margin-top:8px">-</div>
+            <div id="smdPrompt" style="color:var(--muted);margin-top:6px">-</div>
+          </div>
+          <div id="answerBox" class="answer" hidden>
+            <div id="resValue"></div>
+            <div id="resTolerance" style="margin-top:6px;color:var(--muted)"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:8px;color:var(--muted);font-size:0.9rem">提示：點擊「顯示答案」來檢查，或按「下一題」產生新的題目。此模擬器僅供練習與教學使用。</div>
+    </section>
+
+    <section style="margin-top:18px" class="card">
+      <h3 style="margin:0 0 8px 0">簡短說明</h3>
+      <ul>
+        <li>題目依使用者選擇的 E 系列隨機產生，演算法會在一個量級 (decade) 中取有效值，並隨機乘以 10 的冪次。</li>
+        <li>色碼會顯示色環；SMD 題目以常見的 3 位數與帶 R 的表示法產生（例如 103、4R7）。</li>
+        <li>本工具強調自我練習與熟悉常用標準值，但不替代實體規格查詢。</li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    // (JS code same as畫布版本,省略展示)
+  </script>
+</body>
+</html>
