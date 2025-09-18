@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>電阻器色碼與數字碼教育模擬器 — v0.2</title>
+<style>
+  body{font-family:Arial, "Noto Sans TC", sans-serif; margin:12px; color:#111;display: flex;
+    flex-direction: column;
+    align-items: center;}
+  
+  h1{font-size:1.5rem; margin-bottom:8px;}
+  select{font-size:16px; padding:6px; margin:8px;}
+  /* resistor area */
+  .resistor-area{height:150px; display:flex; align-items:center; justify-content:center; margin:12px 0;}
+  /* -------- 普通電阻 -------- */
+  .resistor {
+    position: relative;
+    width: 200px;
+    height: 70px;
+    background: linear-gradient(to bottom, #e0c090, #b07a40);
+    border-radius: 30px;
+    box-shadow: inset -5px -5px 8px rgba(0,0,0,0.18),
+                inset 5px 5px 8px rgba(255,255,255,0.18),
+                0 3px 8px rgba(0,0,0,0.12);
+    display:inline-block;
+  }
+  .resistor::before, .resistor::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 14px;
+    top: 28px;
+    background: linear-gradient(to bottom, #CCC, #999);
+  }
+  .resistor::before { left: -100px; }
+  .resistor::after { right: -100px; }
+
+  .resistor .band {
+    position: absolute;
+    width: 15px;
+    height: 70px;
+    top: 0;
+    border-radius: 2px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.35);
+  }
+
+  /* -------- SMD 電阻 -------- */
+  .smd {
+    position: relative;
+    width: 140px;
+    height: 100px;
+    background: linear-gradient(to bottom,#666,#222);
+    border-radius: 0px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    font-family:monospace;
+    font-size:32px;
+    font-weight:700;
+    color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,0.8);
+  }
+  .smd::before, .smd::after {
+    content:"";
+    position:absolute;
+    width:28px;
+    height:100px;
+    top:0;
+    background: linear-gradient(to bottom,#ccc,#999);
+  }
+  .smd::before{ left:-28px; border-radius:3px 0 0 3px; }
+  .smd::after{ right:-28px; border-radius:0 3px 3px 0; }
+
+  .answer-area { min-height:36px; font-weight:600; color:#0b5cff; margin:8px 0; }
+  .layout { display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .controls { display:flex; gap:10px; }
+  button { padding:8px 14px; font-size:16px; border-radius:8px; border:none; background:#0b5cff; color:#fff; cursor:pointer; }
+
+  @media (orientation:portrait){
+    .layout{ flex-direction:column; align-items:center; }
+    .controls{ flex-direction:row; }
+  }
+  @media (orientation:landscape){
+    .layout{ flex-direction:row; align-items:center; justify-content:center; gap:18px; }
+    .controls{ flex-direction:column; }
+    .answer-area{ min-width:220px; text-align:right; }
+  }
+  /* 新增的 CSS 樣式 */
+.header-container {
+  display: flex;
+  align-items: center; /* 垂直置中對齊 */
+  gap: 10px; /* logo 和標題之間的間距 */
+  justify-content: center;
+  width: 100%;
+}
+.logo {
+  width: 80px;
+  height: 80px;
+}
+ /* 新增的頁腳樣式 */
+footer {
+  width: 100%;
+  margin-top: 30px;
+  padding: 20px 10px;
+  background-color: #f8f8f8; /* 淺灰色背景，讓頁腳更突出 */
+  border-top: 1px solid #ddd; /* 頂部邊框線，視覺上與主體區隔 */
+  text-align: left;
+}
+
+.footer-container {
+  max-width: 800px; /* 限制頁腳內容最大寬度 */
+  margin: 0 auto;
+}
+
+.disclaimer p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+}
+
+ /* 新增的社群媒體區塊樣式 */
+.social-media {
+  margin: 10px 0; /* 在上下方增加一些間距 */
+  text-align: center; /* 讓整個區塊置中 */
+}
+/* 確保社群媒體圖標連結沒有下劃線 */
+.social-media a {
+  text-decoration: none;
+}
+/* 社群媒體圖標樣式 */
+.social-icon {
+  width: 30px; /* 設定圖片寬度 */
+  height: 30px; /* 設定圖片高度 */
+  margin: 0 10px; /* 圖片之間的間距 */
+  transition: transform 0.2s ease-in-out; /* 增加滑鼠懸停時的動態效果 */
+}
+/* 滑鼠懸停時的效果 */
+.social-icon:hover {
+  transform: scale(1.1); /* 放大圖標 */
+}
+
+.copyright {
+  text-align: center; /* 覆寫父層設定，讓此區塊內容置中 */
+}
+
+.copyright p {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+</style>
+</head>
+<body>
+  
+  <div class="header-container">
+    <img src="Logo_RockBee1.png" alt="Logo" class="logo">
+  <h1>電阻器色碼與數字碼教育模擬器（v0.2）</h1>  
+  </div>
+  <div>
+    <select id="mode">
+      <option value="E24-4band">E24 四環色碼</option>
+      <option value="E48-5band">E48 五環色碼</option>
+      <option value="E96-5band">E96 五環色碼</option>
+      <option value="E24-3digit">E24 三位數字碼</option>
+      <option value="E48-4digit">E48 四位數字碼</option>
+      <option value="E96-4digit">E96 四位數字碼</option>
+    </select>
+  </div>
+
+  <div class="resistor-area" id="resistorArea" aria-live="polite"></div>
+
+  <div class="layout">
+    <div class="answer-area" id="answerArea">?</div>
+    <div class="controls">
+      <button id="nextBtn">下一題</button>
+      <button id="showBtn" style="background:#fff;color:#0b5cff;border:1px solid #0b5cff;">顯示答案</button>
+    </div>
+  </div>
+
+<script>
+const E24 = [10,11,12,13,15,16,18,20,22,24,27,30,33,36,39,43,47,51,56,62,68,75,82,91];
+const E48 = [100,105,110,115,121,127,133,140,147,154,162,169,178,187,196,205,215,226,237,249,261,274,287,301,
+  316,332,348,365,383,402,422,442,464,487,511,536,562,590,619,649,681,715,750,787,825,866,909,953];
+const E96 = [100,102,105,107,110,113,115,118,121,124,127,130,133,137,140,143,147,150,154,158,162,165,169,174,178,182,187,191,196,200,205,210,215,221,226,232,237,243,249,255,
+  261,267,274,280,287,294,301,309,316,324,332,340,348,357,365,374,383,392,402,412,422,432,442,453,464,475,487,499,511,523,536,549,562,576,590,604,619,634,649,665,
+  681,698,715,732,750,768,787,806,825,845,866,887,909,931,953,976];
+
+const exponentToColor = {
+  "-2":"#C0C0C0", "-1":"#FFD700", "0":"#000000", "1":"#996633", "2":"#FF0000",
+  "3":"#FFA500", "4":"#FFFF00", "5":"#00FF00", "6":"#0000FF", "7":"#FF00FF",
+  "8":"#969696", "9":"#FFFFFF"
+};
+  
+const toleranceColor = { "E24-4band":"#FFD700", "E48-5band":"#FF0000", "E96-5band":"#996633" };
+
+function formatValueNice(v){
+  if (v >= 1e6) return (v/1e6).toFixed(2).replace(/\.?0+$/,'') + " MΩ";
+  if (v >= 1e3) return (v/1e3).toFixed(2).replace(/\.?0+$/,'') + " kΩ";
+  return v.toFixed(2).replace(/\.?0+$/,'') + " Ω";
+}
+
+function getRandomExponent(isDigit){
+  if(isDigit){
+    const choices = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,5,5,6];
+    return choices[Math.floor(Math.random()*choices.length)];
+  } else {
+    const weighted = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6,-1,-2];
+    return weighted[Math.floor(Math.random()*weighted.length)];
+  }
+}
+
+function renderBandsOnResistor(resistorElem, bandColors){
+  while(resistorElem.firstChild) resistorElem.removeChild(resistorElem.firstChild);
+  const bw = 15;
+  const count = bandColors.length;
+  const bodyW = resistorElem.clientWidth;
+  const totalBandsWidth = count * bw + (count-1)*10;
+  let startX = Math.max(8, Math.round((bodyW - totalBandsWidth)/2));
+  for(let i=0;i<count;i++){
+    const b = document.createElement("div");
+    b.className = "band";
+    b.style.left = (startX + i * (bw + 10)) + "px";
+    b.style.background = bandColors[i];
+    resistorElem.appendChild(b);
+  }
+}
+
+let currentAnswerText = "";
+
+function generateQuestionByMode(mode){
+  const area = document.getElementById("resistorArea");
+  area.innerHTML = "";
+  currentAnswerText = "";
+
+  if(mode.includes("band")){
+    const seriesKey = mode.split("-")[0];
+    const series = (seriesKey==="E24")?E24: (seriesKey==="E48")?E48: E96;
+    const base = series[Math.floor(Math.random()*series.length)];
+    const exp = getRandomExponent(false);
+    const value = base * Math.pow(10, exp);
+    const tol = (seriesKey==="E24")? "±5%": (seriesKey==="E48")? "±2%":"±1%";
+    currentAnswerText = formatValueNice(value) + " " + tol;
+
+    const digitsCount = (mode==="E24-4band")? 2 : 3;
+    const bandColors = [];
+    let tmp = base;
+    for(let i=digitsCount-1;i>=0;i--){
+      const d = tmp % 10;
+      tmp = Math.floor(tmp/10);
+      const colorName = ["black","brown","red","orange","yellow","green","blue","violet","gray","white"][d];
+      bandColors[i] = colorName;
+    }
+    const multColor = exponentToColor[String(exp)] || "black";
+    bandColors.push(multColor);
+    bandColors.push(toleranceColor[mode]);
+    const res = document.createElement("div");
+    res.className = "resistor";
+    area.appendChild(res);
+    requestAnimationFrame(()=> renderBandsOnResistor(res, bandColors));
+  } else {
+    if(mode==="E24-3digit"){
+      const base = E24[Math.floor(Math.random()*E24.length)];
+      const exp = getRandomExponent(true);
+      const value = base * Math.pow(10, exp);
+      currentAnswerText = formatValueNice(value) + " ±5%";
+      const code = String(base).padStart(2,"0") + String(exp);
+      const smd = document.createElement("div");
+      smd.className = "smd";
+      smd.textContent = code;
+      area.appendChild(smd);
+    } else if(mode==="E48-4digit" || mode==="E96-4digit"){
+      const pool = (mode==="E48-4digit")? E48 : E96;
+      const base = pool[Math.floor(Math.random()*pool.length)];
+      const exp = getRandomExponent(true);
+      const value = base * Math.pow(10, exp);
+      currentAnswerText = formatValueNice(value) + " " + ((mode==="E48-4digit")? "±2%":"±1%");
+      const code = String(base).padStart(3,"0") + String(exp);
+      const smd = document.createElement("div");
+      smd.className = "smd";
+      smd.textContent = code;
+      area.appendChild(smd);
+    }
+  }
+}
+
+document.getElementById("nextBtn").addEventListener("click", ()=> {
+  const mode = document.getElementById("mode").value;
+  generateQuestionByMode(mode);
+  document.getElementById("answerArea").textContent = "";
+});
+document.getElementById("showBtn").addEventListener("click", ()=> {
+  document.getElementById("answerArea").textContent = currentAnswerText;
+});
+
+generateQuestionByMode(document.getElementById("mode").value);
+</script>
+  <footer>
+  <div class="footer-container">
+    <div class="disclaimer">
+      <p>
+        本工具為電阻辨識練習模擬器，旨在透過色碼電阻與 SMD 電阻的模擬顯示，幫助使用者練習辨識電阻標示。<br>
+        我們的題庫嚴格依據 IEC 60062 (電阻器標示代碼)、IEC 60063 (E 系列標準阻值) 及 IEC 60757 (顏色代碼) 等國際規範設計，確保所有題目皆符合業界標準。<br>
+        本模擬器僅供教學與學習用途。對於因使用本程式進行實際設計或應用所造成的任何後果，作者概不負責。
+      </p>
+    </div>
+
+    <div class="social-media">
+      <a href="https://www.instagram.com/rockbee.kuo?igsh=MWxhMnF1bmZsang4NQ==" target="_blank">
+        <img src="Instagram_Glyph_Black.svg" alt="Instagram" class="social-icon">
+      </a>
+      <a href="https://www.threads.com/@rockbee.kuo" target="_blank">
+        <img src="threads-logo-black.svg" alt="Threads" class="social-icon">
+      </a>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2025 RockBee. All rights reserved.</p>
+      <p>著作權所有 &copy; 2025 RockBee. 保留所有權利。</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
