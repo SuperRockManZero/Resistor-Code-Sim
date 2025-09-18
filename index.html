@@ -203,7 +203,7 @@ function formatValueNice(v){
 
 function getRandomExponent(isDigit){
   if(isDigit){
-    const choices = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,5,5,6];
+    const choices = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6];
     return choices[Math.floor(Math.random()*choices.length)];
   } else {
     const weighted = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6,-1,-2];
