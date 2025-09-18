@@ -296,6 +296,11 @@ function generateQuestionByMode(mode){
 }
 
 document.getElementById("nextBtn").addEventListener("click", ()=> {
+// 新增這行來追蹤「下一題」按鈕的點擊
+  gtag('event', 'click', {
+    'event_category': 'interaction',
+    'event_label': 'next_question_button'
+  });
   const mode = document.getElementById("mode").value;
   generateQuestionByMode(mode);
   document.getElementById("answerArea").textContent = "";
@@ -303,7 +308,11 @@ document.getElementById("nextBtn").addEventListener("click", ()=> {
 document.getElementById("showBtn").addEventListener("click", ()=> {
   document.getElementById("answerArea").textContent = currentAnswerText;
 });
-
+// 新增這行來追蹤「顯示答案」按鈕的點擊
+  gtag('event', 'click', {
+    'event_category': 'interaction',
+    'event_label': 'show_answer_button'
+  });
 generateQuestionByMode(document.getElementById("mode").value);
 </script>
   <footer>
