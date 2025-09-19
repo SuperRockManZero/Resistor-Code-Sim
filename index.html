@@ -12,7 +12,7 @@
 
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>電阻器色碼與數字碼教育模擬器 — v0.4</title>
+<title>電阻器色碼與數字碼教育模擬器 — v1.0</title>
 <style>
   body{font-family:Arial, "Noto Sans TC", sans-serif; margin:12px; color:#111;display: flex;
     flex-direction: column;
@@ -25,31 +25,55 @@
   /* -------- 普通電阻 -------- */
   .resistor {
     position: relative;
-    width: 200px;
+    width: 130px;
     height: 70px;
-    background: linear-gradient(to bottom, #e0c090, #b07a40);
-    border-radius: 30px;
+    /* 明亮的淺藍到深藍 */
+    background: linear-gradient(to bottom, #87CEFA, #4682B4);
+    /* 亮黃色到金棕色 */
+    /*background: linear-gradient(to bottom, #FFD700, #DAA520); */
+    /* 淺棕色到深棕色 */
+    /*background: linear-gradient(to bottom, #e0c090, #b07a40); */
+    /* 淺灰到深灰 */
+    /*background: linear-gradient(to bottom, #C0C0C0, #808080); */
+    /*border-radius: 30px;*/
     box-shadow: inset -5px -5px 8px rgba(0,0,0,0.18),
                 inset 5px 5px 8px rgba(255,255,255,0.18),
                 0 3px 8px rgba(0,0,0,0.12);
     display:inline-block;
   }
+  
   .resistor::before, .resistor::after {
     content: "";
     position: absolute;
-    width: 100px;
-    height: 14px;
-    top: 28px;
-    background: linear-gradient(to bottom, #CCC, #999);
+    width: 40px;
+    height: 80px;
+    border-radius: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: inherit; 
+    box-shadow: inherit;
   }
-  .resistor::before { left: -100px; }
-  .resistor::after { right: -100px; }
+  .resistor::before{ left:-35px;}
+  .resistor::after{ right:-35px;}
+  
+  .resistor .lead {
+    position: absolute;
+    width: 100px;
+    height: 20px; /* 引腳高度 */
+    background: linear-gradient(to bottom, #CCC, #999);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .resistor .lead.left { left: -100px; z-index: -1; }
+  .resistor .lead.right { right: -100px; z-index: -1;}
 
+/* Styles for color bands */
   .resistor .band {
     position: absolute;
     width: 15px;
-    height: 70px;
-    top: 0;
+    height: 71px;
+    top: 50%;
+    transform: translateY(-50%);
     border-radius: 2px;
     box-shadow: inset 0 0 4px rgba(0,0,0,0.35);
   }
@@ -165,7 +189,7 @@ footer {
   
   <div class="header-container">
     <img src="Logo_RockBee1.png" alt="Logo" class="logo">
-  <h1>電阻器色碼與數字碼教育模擬器（v0.4）</h1>  
+  <h1>電阻器色碼與數字碼教育模擬器（v1.0）</h1>  
   </div>
   <div>
     <select id="mode">
@@ -219,22 +243,34 @@ function getRandomExponent(isDigit){
     return weighted[Math.floor(Math.random()*weighted.length)];
   }
 }
+  
+ function renderBandsOnResistor(resistorElem, bandColors) {
+  // 只刪除舊的色環，不刪掉引腳
+  resistorElem.querySelectorAll('.band').forEach(b => b.remove());
 
-function renderBandsOnResistor(resistorElem, bandColors){
-  while(resistorElem.firstChild) resistorElem.removeChild(resistorElem.firstChild);
-  const bw = 15;
-  const count = bandColors.length;
-  const bodyW = resistorElem.clientWidth;
-  const totalBandsWidth = count * bw + (count-1)*10;
-  let startX = Math.max(8, Math.round((bodyW - totalBandsWidth)/2));
-  for(let i=0;i<count;i++){
+  // 重新計算色環的動態位置
+  const bw = 15; // 色環寬度
+  const gap = 10; // 色環間距
+  const count = bandColors.length; // 取得色環數量 (4 或 5)
+  const bodyW = resistorElem.clientWidth; // 取得電阻主體寬度
+  
+  // 計算所有色環和間距的總寬度
+  const totalBandsWidth = count * bw + (count - 1) * gap;
+  
+  // 計算起始位置，以實現置中
+  let startX = Math.round((bodyW - totalBandsWidth) / 2);
+
+  // 繪製新的色環
+  for (let i = 0; i < count; i++) {
     const b = document.createElement("div");
     b.className = "band";
-    b.style.left = (startX + i * (bw + 10)) + "px";
+    // 根據動態計算的起始位置來設定 left
+    b.style.left = (startX + i * (bw + gap)) + "px";
     b.style.background = bandColors[i];
     resistorElem.appendChild(b);
   }
 }
+
 
 let currentAnswerText = "";
 
@@ -267,6 +303,16 @@ function generateQuestionByMode(mode){
     const res = document.createElement("div");
     res.className = "resistor";
     area.appendChild(res);
+    
+    const leadLeft = document.createElement("div");
+    leadLeft.className = "lead left";
+    res.appendChild(leadLeft);
+
+    const leadRight = document.createElement("div");
+    leadRight.className = "lead right";
+    res.appendChild(leadRight);
+    
+    
     requestAnimationFrame(()=> renderBandsOnResistor(res, bandColors));
   } else {
     if(mode==="E24-3digit"){
@@ -294,8 +340,8 @@ function generateQuestionByMode(mode){
   }
 }
 
-document.getElementById("nextBtn").addEventListener("click", ()=> {
-// 新增這行來追蹤「下一題」按鈕的點擊
+  document.getElementById("nextBtn").addEventListener("click", ()=> {
+    // 新增這行來追蹤「下一題」按鈕的點擊
   gtag('event', 'click', {
     'event_category': 'interaction',
     'event_label': 'next_question_button'
@@ -303,42 +349,39 @@ document.getElementById("nextBtn").addEventListener("click", ()=> {
   const mode = document.getElementById("mode").value;
   generateQuestionByMode(mode);
   document.getElementById("answerArea").textContent = "";
-  
 });
-document.getElementById("showBtn").addEventListener("click", ()=> {
+  document.getElementById("showBtn").addEventListener("click", ()=> {
   document.getElementById("answerArea").textContent = currentAnswerText;
-  // 新增這行來追蹤「顯示答案」按鈕的點擊
+    // 新增這行來追蹤「顯示答案」按鈕的點擊
   gtag('event', 'click', {
     'event_category': 'interaction',
     'event_label': 'show_answer_button'
   });
 });
 generateQuestionByMode(document.getElementById("mode").value);
-</script>
+  </script>
   <footer>
-  <div class="footer-container">
-    <div class="disclaimer">
-      <p>
-        本工具為電阻辨識練習模擬器，旨在透過色碼電阻與 SMD 電阻的模擬顯示，幫助使用者練習辨識電阻標示。<br>
-        我們的題庫嚴格依據 IEC 60062 (電阻器標示代碼)、IEC 60063 (E 系列標準阻值) 及 IEC 60757 (顏色代碼) 等國際規範設計，確保所有題目皆符合業界標準。<br>
-        本模擬器僅供教學與學習用途。對於因使用本程式進行實際設計或應用所造成的任何後果，作者概不負責。
-      </p>
+    <div class="footer-container">
+      <div class="disclaimer">
+        <p>
+          本工具為電阻辨識練習模擬器，旨在透過色碼電阻與 SMD 電阻的模擬顯示，幫助使用者練習辨識電阻標示。<br>
+          我們的題庫嚴格依據 IEC 60062 (電阻器標示代碼)、IEC 60063 (E 系列標準阻值) 及 IEC 60757 (顏色代碼) 等國際規範設計，確保所有題目皆符合業界標準。<br>
+          本模擬器僅供教學與學習用途。對於因使用本程式進行實際設計或應用所造成的任何後果，作者概不負責。
+        </p>
+      </div>
+      <div class="social-media">
+        <a href="https://www.instagram.com/rockbee.kuo?igsh=MWxhMnF1bmZsang4NQ==" target="_blank">
+          <img src="Instagram_Glyph_Black.svg" alt="Instagram" class="social-icon">
+        </a>
+        <a href="https://www.threads.com/@rockbee.kuo" target="_blank">
+          <img src="threads-logo-black.svg" alt="Threads" class="social-icon">
+        </a>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 RockBee. All rights reserved.</p>
+        <p>著作權所有 &copy; 2025 RockBee. 保留所有權利。</p>
+      </div>
     </div>
-
-    <div class="social-media">
-      <a href="https://www.instagram.com/rockbee.kuo?igsh=MWxhMnF1bmZsang4NQ==" target="_blank">
-        <img src="Instagram_Glyph_Black.svg" alt="Instagram" class="social-icon">
-      </a>
-      <a href="https://www.threads.com/@rockbee.kuo" target="_blank">
-        <img src="threads-logo-black.svg" alt="Threads" class="social-icon">
-      </a>
-    </div>
-    
-    <div class="copyright">
-      <p>&copy; 2025 RockBee. All rights reserved.</p>
-      <p>著作權所有 &copy; 2025 RockBee. 保留所有權利。</p>
-    </div>
-  </div>
-</footer>
+  </footer>
 </body>
 </html>
