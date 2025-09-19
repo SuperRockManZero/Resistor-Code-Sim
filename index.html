@@ -10,7 +10,7 @@
   gtag('config', 'G-7WGQXFLPEN');
 </script>
 
-<meta charset="utf-8"/>
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>電阻器色碼與數字碼教育模擬器 — v0.4</title>
 <style>
@@ -181,7 +181,7 @@ footer {
   <div class="resistor-area" id="resistorArea" aria-live="polite"></div>
 
   <div class="layout">
-    <div class="answer-area" id="answerArea">?</div>
+    <div class="answer-area" id="answerArea">請按「下一題」開始</div>
     <div class="controls">
       <button id="nextBtn">下一題</button>
       <button id="showBtn" style="background:#fff;color:#0b5cff;border:1px solid #0b5cff;">顯示答案</button>
@@ -303,15 +303,16 @@ document.getElementById("nextBtn").addEventListener("click", ()=> {
   const mode = document.getElementById("mode").value;
   generateQuestionByMode(mode);
   document.getElementById("answerArea").textContent = "";
+  
 });
 document.getElementById("showBtn").addEventListener("click", ()=> {
   document.getElementById("answerArea").textContent = currentAnswerText;
-});
-// 新增這行來追蹤「顯示答案」按鈕的點擊
+  // 新增這行來追蹤「顯示答案」按鈕的點擊
   gtag('event', 'click', {
     'event_category': 'interaction',
     'event_label': 'show_answer_button'
   });
+});
 generateQuestionByMode(document.getElementById("mode").value);
 </script>
   <footer>
