@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7WGQXFLPEN"></script>
-<script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7WGQXFLPEN"></script>
+  <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-7WGQXFLPEN');
-</script>
-
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>電阻器色碼與數字碼教育模擬器 — v1.0</title>
-<style>
+  </script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>電阻器色碼與數字碼教育模擬器 v1.3</title>
+  <style>
   body{font-family:Arial, "Noto Sans TC", sans-serif; margin:12px; color:#111;display: flex;
     flex-direction: column;
     align-items: center;}
-  
+  /* Resistor Code Simulator */
   h1{font-size:1.5rem; margin-bottom:8px;}
   select{font-size:16px; padding:6px; margin:8px;}
   /* resistor area */
@@ -28,14 +27,25 @@
     width: 130px;
     height: 70px;
     /* 明亮的淺藍到深藍 */
-    background: linear-gradient(to bottom, #87CEFA, #4682B4);
+    /*background: linear-gradient(to bottom, #87CEFA, #4682B4);*/
     /* 亮黃色到金棕色 */
     /*background: linear-gradient(to bottom, #FFD700, #DAA520); */
     /* 淺棕色到深棕色 */
     /*background: linear-gradient(to bottom, #e0c090, #b07a40); */
     /* 淺灰到深灰 */
     /*background: linear-gradient(to bottom, #C0C0C0, #808080); */
-    /*border-radius: 30px;*/
+    /* 古銅色 */
+    /*background: linear-gradient(to bottom, #CD7F32, #8B4513);*/
+    /* 銀灰色 */
+    /*background: linear-gradient(to bottom, #C0C0C0, #708090);*/    
+    /* 薄荷綠 */
+    /*background: linear-gradient(to bottom, #98FF98, #6B8E23);*/
+    /* 薰衣草紫 */
+    /*background: linear-gradient(to bottom, #E6E6FA, #9370DB);*/
+    /* 藍寶石色 */
+    /*background: linear-gradient(to bottom, #1E90FF, #000080);*/
+    /* 翡翠綠 */
+    /*background: linear-gradient(to bottom, #3CB371, #006400);*/
     box-shadow: inset -5px -5px 8px rgba(0,0,0,0.18),
                 inset 5px 5px 8px rgba(255,255,255,0.18),
                 0 3px 8px rgba(0,0,0,0.12);
@@ -60,14 +70,14 @@
     position: absolute;
     width: 100px;
     height: 20px; /* 引腳高度 */
-    background: linear-gradient(to bottom, #CCC, #999);
+    background: linear-gradient(to bottom, #FFF, #AAA); /* #CCC, #999 */
     top: 50%;
     transform: translateY(-50%);
   }
   .resistor .lead.left { left: -100px; z-index: -1; }
   .resistor .lead.right { right: -100px; z-index: -1;}
 
-/* Styles for color bands */
+  /* Styles for color bands */
   .resistor .band {
     position: absolute;
     width: 15px;
@@ -83,13 +93,13 @@
     position: relative;
     width: 140px;
     height: 100px;
-    background: linear-gradient(to bottom,#666,#222);
+    background: linear-gradient(to bottom,#888,#222); /*#666,#222*/
     border-radius: 0px;
     display:inline-flex;
     justify-content:center;
     align-items:center;
     font-family:monospace;
-    font-size:32px;
+    font-size:48px; /*32px*/
     font-weight:700;
     color:#fff;
     text-shadow:0 1px 2px rgba(0,0,0,0.8);
@@ -100,7 +110,7 @@
     width:28px;
     height:100px;
     top:0;
-    background: linear-gradient(to bottom,#ccc,#999);
+    background: linear-gradient(to bottom,#EEE,#AAA); /* #CCC, #999 */
   }
   .smd::before{ left:-28px; border-radius:3px 0 0 3px; }
   .smd::after{ right:-28px; border-radius:0 3px 3px 0; }
@@ -119,77 +129,62 @@
     .controls{ flex-direction:column; }
     .answer-area{ min-width:220px; text-align:right; }
   }
-  /* 新增的 CSS 樣式 */
-.header-container {
-  display: flex;
-  align-items: center; /* 垂直置中對齊 */
-  gap: 10px; /* logo 和標題之間的間距 */
-  justify-content: center;
-  width: 100%;
-}
-.logo {
-  width: 80px;
-  height: 80px;
-}
- /* 新增的頁腳樣式 */
-footer {
-  width: 100%;
-  margin-top: 30px;
-  padding: 20px 10px;
-  background-color: #f8f8f8; /* 淺灰色背景，讓頁腳更突出 */
-  border-top: 1px solid #ddd; /* 頂部邊框線，視覺上與主體區隔 */
-  text-align: left;
-}
-
-.footer-container {
-  max-width: 800px; /* 限制頁腳內容最大寬度 */
-  margin: 0 auto;
-}
-
-.disclaimer p {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.6;
-  margin: 0 0 10px 0;
-}
-
- /* 新增的社群媒體區塊樣式 */
-.social-media {
-  margin: 10px 0; /* 在上下方增加一些間距 */
-  text-align: center; /* 讓整個區塊置中 */
-}
-/* 確保社群媒體圖標連結沒有下劃線 */
-.social-media a {
-  text-decoration: none;
-}
-/* 社群媒體圖標樣式 */
-.social-icon {
-  width: 30px; /* 設定圖片寬度 */
-  height: 30px; /* 設定圖片高度 */
-  margin: 0 10px; /* 圖片之間的間距 */
-  transition: transform 0.2s ease-in-out; /* 增加滑鼠懸停時的動態效果 */
-}
-/* 滑鼠懸停時的效果 */
-.social-icon:hover {
-  transform: scale(1.1); /* 放大圖標 */
-}
-
-.copyright {
-  text-align: center; /* 覆寫父層設定，讓此區塊內容置中 */
-}
-
-.copyright p {
-  font-size: 12px;
-  color: #888;
-  margin: 0;
-}
-</style>
-</head>
-<body>
+  /* CSS 樣式 */
+  .header-container {
+    display: flex;
+    align-items: center; /* 垂直置中對齊 */
+    gap: 10px; /* logo 和標題之間的間距 */
+    justify-content: center;
+    width: 100%;
+  }
+  .logo { width: 80px; height: 80px; }
   
+  /* 頁腳樣式 */
+  footer {
+    width: 100%;
+    margin-top: 30px;
+    padding: 20px 10px;
+    background-color: #f8f8f8; /* 淺灰色背景，讓頁腳更突出 */
+    border-top: 1px solid #ddd; /* 頂部邊框線，視覺上與主體區隔 */
+    text-align: left;
+  }
+
+  .footer-container {
+    max-width: 800px; /* 限制頁腳內容最大寬度 */
+    margin: 0 auto;
+  }
+  
+  .disclaimer p { font-size: 14px; color: #555; line-height: 1.6; margin: 0 0 10px 0; }
+
+  /* 社群媒體區塊樣式 */
+  .social-media {
+    margin: 10px 0; /* 在上下方增加一些間距 */
+    text-align: center; /* 讓整個區塊置中 */
+  }
+  /* 確保社群媒體圖標連結沒有下劃線 */
+  .social-media a { text-decoration: none; }
+  /* 社群媒體圖標樣式 */
+  .social-icon {
+    width: 40px; /* 設定圖片寬度 */
+    height: 40px; /* 設定圖片高度 */
+    margin: 0 10px; /* 圖片之間的間距 */
+    transition: transform 0.2s ease-in-out; /* 增加滑鼠懸停時的動態效果 */
+  }
+  /* 滑鼠懸停時的效果 */
+  .social-icon:hover {
+    transform: scale(1.1); /* 放大圖標 */
+  }
+
+  .copyright {
+    text-align: center; /* 覆寫父層設定，讓此區塊內容置中 */
+  } 
+  .copyright p { font-size: 12px; color: #888; margin: 0; }
+  </style>
+</head>
+<body> 
   <div class="header-container">
     <img src="Logo_RockBee1.png" alt="Logo" class="logo">
-  <h1>電阻器色碼與數字碼教育模擬器（v1.0）</h1>  
+    <h1>電阻器色碼與數字碼教育模擬器 v1.4</h1>
   </div>
   <div>
     <select id="mode">
@@ -205,160 +200,187 @@ footer {
   <div class="resistor-area" id="resistorArea" aria-live="polite"></div>
 
   <div class="layout">
-    <div class="answer-area" id="answerArea">請按「下一題」開始</div>
+    <div class="answer-area" id="answerArea">?</div>
     <div class="controls">
       <button id="nextBtn">下一題</button>
       <button id="showBtn" style="background:#fff;color:#0b5cff;border:1px solid #0b5cff;">顯示答案</button>
     </div>
   </div>
-
-<script>
-const E24 = [10,11,12,13,15,16,18,20,22,24,27,30,33,36,39,43,47,51,56,62,68,75,82,91];
-const E48 = [100,105,110,115,121,127,133,140,147,154,162,169,178,187,196,205,215,226,237,249,261,274,287,301,
-  316,332,348,365,383,402,422,442,464,487,511,536,562,590,619,649,681,715,750,787,825,866,909,953];
-const E96 = [100,102,105,107,110,113,115,118,121,124,127,130,133,137,140,143,147,150,154,158,162,165,169,174,178,182,187,191,196,200,205,210,215,221,226,232,237,243,249,255,
+  
+  <script>
+  const E24 = [10,11,12,13,15,16,18,20,22,24,27,30,33,36,39,43,47,51,56,62,68,75,82,91];
+  const E48 = [100,105,110,115,121,127,133,140,147,154,162,169,178,187,196,205,215,226,237,249,261,274,287,301,
+  316,332,348,365,383,402,422,442,464,487,511,536,562,590,619,649,681,715,750,787,825,845,866,887,909,931,953,976];
+  const E96 = [100,102,105,107,110,113,115,118,121,124,127,130,133,137,140,143,147,150,154,158,162,165,169,174,178,182,187,191,196,200,205,210,215,221,226,232,237,243,249,255,
   261,267,274,280,287,294,301,309,316,324,332,340,348,357,365,374,383,392,402,412,422,432,442,453,464,475,487,499,511,523,536,549,562,576,590,604,619,634,649,665,
   681,698,715,732,750,768,787,806,825,845,866,887,909,931,953,976];
-
-const exponentToColor = {
-  "-2":"#C0C0C0", "-1":"#FFD700", "0":"#000000", "1":"#996633", "2":"#FF0000",
-  "3":"#FFA500", "4":"#FFFF00", "5":"#00FF00", "6":"#0000FF", "7":"#FF00FF",
-  "8":"#969696", "9":"#FFFFFF"
-};
   
-const toleranceColor = { "E24-4band":"#FFD700", "E48-5band":"#FF0000", "E96-5band":"#996633" };
-
-function formatValueNice(v){
-  if (v >= 1e6) return (v/1e6).toFixed(2).replace(/\.?0+$/,'') + " MΩ";
-  if (v >= 1e3) return (v/1e3).toFixed(2).replace(/\.?0+$/,'') + " kΩ";
-  return v.toFixed(2).replace(/\.?0+$/,'') + " Ω";
-}
-
-function getRandomExponent(isDigit){
-  if(isDigit){
-    const choices = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6];
-    return choices[Math.floor(Math.random()*choices.length)];
-  } else {
-    const weighted = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6,-1,-2];
-    return weighted[Math.floor(Math.random()*weighted.length)];
+  // IEC 60757 //
+  const IEC_60757_COLORS = {
+    "0": "#000000",   // 黑色
+    "1": "#996633",   // 棕色
+    "2": "#FF0000",   // 紅色
+    "3": "#FFA500",   // 橘色
+    "4": "#FFFF00",   // 黃色
+    "5": "#00FF00",   // 綠色
+    "6": "#0000FF",   // 藍色
+    "7": "#FF00FF",   // 紫色
+    "8": "#969696",   // 灰色
+    "9": "#FFFFFF",   // 白色
+    "gold": "#FFD700",    // 金色
+    "silver": "#C0C0C0"   // 銀色
+  };
+  
+  function formatValueNice(v){
+    if (v >= 1e6) return (v/1e6).toFixed(2).replace(/\.?0+$/,'') + " MΩ";
+    if (v >= 1e3) return (v/1e3).toFixed(2).replace(/\.?0+$/,'') + " kΩ";
+    return v.toFixed(2).replace(/\.?0+$/,'') + " Ω";
   }
-}
-  
- function renderBandsOnResistor(resistorElem, bandColors) {
-  // 只刪除舊的色環，不刪掉引腳
-  resistorElem.querySelectorAll('.band').forEach(b => b.remove());
 
-  // 重新計算色環的動態位置
-  const bw = 15; // 色環寬度
-  const gap = 10; // 色環間距
-  const count = bandColors.length; // 取得色環數量 (4 或 5)
-  const bodyW = resistorElem.clientWidth; // 取得電阻主體寬度
-  
-  // 計算所有色環和間距的總寬度
-  const totalBandsWidth = count * bw + (count - 1) * gap;
-  
-  // 計算起始位置，以實現置中
-  let startX = Math.round((bodyW - totalBandsWidth) / 2);
-
-  // 繪製新的色環
-  for (let i = 0; i < count; i++) {
-    const b = document.createElement("div");
-    b.className = "band";
-    // 根據動態計算的起始位置來設定 left
-    b.style.left = (startX + i * (bw + gap)) + "px";
-    b.style.background = bandColors[i];
-    resistorElem.appendChild(b);
-  }
-}
-
-
-let currentAnswerText = "";
-
-function generateQuestionByMode(mode){
-  const area = document.getElementById("resistorArea");
-  area.innerHTML = "";
-  currentAnswerText = "";
-
-  if(mode.includes("band")){
-    const seriesKey = mode.split("-")[0];
-    const series = (seriesKey==="E24")?E24: (seriesKey==="E48")?E48: E96;
-    const base = series[Math.floor(Math.random()*series.length)];
-    const exp = getRandomExponent(false);
-    const value = base * Math.pow(10, exp);
-    const tol = (seriesKey==="E24")? "±5%": (seriesKey==="E48")? "±2%":"±1%";
-    currentAnswerText = formatValueNice(value) + " " + tol;
-
-    const digitsCount = (mode==="E24-4band")? 2 : 3;
-    const bandColors = [];
-    let tmp = base;
-    for(let i=digitsCount-1;i>=0;i--){
-      const d = tmp % 10;
-      tmp = Math.floor(tmp/10);
-      const colorName = ["black","brown","red","orange","yellow","green","blue","violet","gray","white"][d];
-      bandColors[i] = colorName;
-    }
-    const multColor = exponentToColor[String(exp)] || "black";
-    bandColors.push(multColor);
-    bandColors.push(toleranceColor[mode]);
-    const res = document.createElement("div");
-    res.className = "resistor";
-    area.appendChild(res);
-    
-    const leadLeft = document.createElement("div");
-    leadLeft.className = "lead left";
-    res.appendChild(leadLeft);
-
-    const leadRight = document.createElement("div");
-    leadRight.className = "lead right";
-    res.appendChild(leadRight);
-    
-    
-    requestAnimationFrame(()=> renderBandsOnResistor(res, bandColors));
-  } else {
-    if(mode==="E24-3digit"){
-      const base = E24[Math.floor(Math.random()*E24.length)];
-      const exp = getRandomExponent(true);
-      const value = base * Math.pow(10, exp);
-      currentAnswerText = formatValueNice(value) + " ±5%";
-      const code = String(base).padStart(2,"0") + String(exp);
-      const smd = document.createElement("div");
-      smd.className = "smd";
-      smd.textContent = code;
-      area.appendChild(smd);
-    } else if(mode==="E48-4digit" || mode==="E96-4digit"){
-      const pool = (mode==="E48-4digit")? E48 : E96;
-      const base = pool[Math.floor(Math.random()*pool.length)];
-      const exp = getRandomExponent(true);
-      const value = base * Math.pow(10, exp);
-      currentAnswerText = formatValueNice(value) + " " + ((mode==="E48-4digit")? "±2%":"±1%");
-      const code = String(base).padStart(3,"0") + String(exp);
-      const smd = document.createElement("div");
-      smd.className = "smd";
-      smd.textContent = code;
-      area.appendChild(smd);
+  function getRandomExponent(isDigit){
+    if(isDigit){
+      const choices = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6];
+      return choices[Math.floor(Math.random()*choices.length)];
+    } else {
+      const weighted = [0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6,-1,-2];
+      return weighted[Math.floor(Math.random()*weighted.length)];
     }
   }
-}
+  
+  function renderBandsOnResistor(resistorElem, bandColors) {
+    resistorElem.querySelectorAll('.band').forEach(b => b.remove());
+    const bw = 15;
+    const gap = 10;
+    const count = bandColors.length;
+    const bodyW = resistorElem.clientWidth;
+    const totalBandsWidth = count * bw + (count - 1) * gap;
+    let startX = Math.round((bodyW - totalBandsWidth) / 2);
+    for (let i = 0; i < count; i++) {
+      const b = document.createElement("div");
+      b.className = "band";
+      b.style.left = (startX + i * (bw + gap)) + "px";
+      b.style.background = bandColors[i];   
+      resistorElem.appendChild(b);
+    }
+  }
+
+  let currentAnswerText = "";
+  
+  function generateQuestionByMode(mode){
+    const area = document.getElementById("resistorArea");
+    area.innerHTML = "";
+    currentAnswerText = "";
+    
+    if(mode.includes("band")){
+      const seriesKey = mode.split("-")[0];
+      const series = (seriesKey==="E24")?E24: (seriesKey==="E48")?E48: E96;
+      const base = series[Math.floor(Math.random()*series.length)];
+      const exp = getRandomExponent(false);
+      const value = base * Math.pow(10, exp);
+      const tol = (seriesKey==="E24")? "±5%": (seriesKey==="E48")? "±2%":"±1%";
+      currentAnswerText = formatValueNice(value) + " " + tol;
+      
+      const digitsCount = (mode==="E24-4band")? 2 : 3;
+      const bandColors = [];
+      let tmp = base;
+      for(let i=digitsCount-1;i>=0;i--){
+        const d = tmp % 10;
+        tmp = Math.floor(tmp/10);
+        const color = IEC_60757_COLORS[String(d)];
+        bandColors[i] = color;
+      }
+      
+      let multColor;
+      if (exp === -1) {
+          multColor = IEC_60757_COLORS.gold;
+      } else if (exp === -2) {
+          multColor = IEC_60757_COLORS.silver;
+      } else {
+          multColor = IEC_60757_COLORS[String(exp)] || IEC_60757_COLORS["0"];
+      }
+      bandColors.push(multColor);
+      
+      let toleranceColorCode;
+      if (mode === "E24-4band") {
+          toleranceColorCode = IEC_60757_COLORS.gold;
+      } else if (mode === "E48-5band") {
+          toleranceColorCode = IEC_60757_COLORS["2"]; // 紅色
+      } else if (mode === "E96-5band") {
+          toleranceColorCode = IEC_60757_COLORS["1"]; // 棕色
+      }
+      bandColors.push(toleranceColorCode);
+
+      const res = document.createElement("div");
+      res.className = "resistor";
+      if (seriesKey === "E24") {
+        res.style.background = 'linear-gradient(to bottom, #e0c090, #b07a40)'; // 淺棕色
+      } else if (seriesKey === "E48") {
+        res.style.background = 'linear-gradient(to bottom, #87CEFA, #4682B4)'; // 淺藍色
+      } else if (seriesKey === "E96") {
+        res.style.background = 'linear-gradient(to bottom, #E6E6FA, #9370DB)'; // 薰衣草紫色
+      }
+      
+      area.appendChild(res);
+      
+      const leadLeft = document.createElement("div");
+      leadLeft.className = "lead left";
+      res.appendChild(leadLeft);
+      
+      const leadRight = document.createElement("div");
+      leadRight.className = "lead right";
+      res.appendChild(leadRight);
+      
+      requestAnimationFrame(()=> renderBandsOnResistor(res, bandColors));
+    } else {
+      if(mode==="E24-3digit"){
+        const base = E24[Math.floor(Math.random()*E24.length)];
+        const exp = getRandomExponent(true);
+        const value = base * Math.pow(10, exp);
+        currentAnswerText = formatValueNice(value) + " ±5%";
+        const code = String(base).padStart(2,"0") + String(exp);
+        const smd = document.createElement("div");
+        smd.className = "smd";
+        smd.textContent = code;
+        area.appendChild(smd);
+      } else if(mode==="E48-4digit" || mode==="E96-4digit"){
+        const pool = (mode==="E48-4digit")? E48 : E96;
+        const base = pool[Math.floor(Math.random()*pool.length)];
+        const exp = getRandomExponent(true);
+        const value = base * Math.pow(10, exp);
+        currentAnswerText = formatValueNice(value) + " " + ((mode==="E48-4digit")? "±2%":"±1%");
+        const code = String(base).padStart(3,"0") + String(exp);
+        const smd = document.createElement("div");
+        smd.className = "smd";
+        smd.textContent = code;
+        area.appendChild(smd);
+      }
+    }
+  }
+
+  document.getElementById("mode").addEventListener("change", () => {
+    const mode = document.getElementById("mode").value;
+    generateQuestionByMode(mode);
+    document.getElementById("answerArea").textContent = "?"; 
+  });
 
   document.getElementById("nextBtn").addEventListener("click", ()=> {
-    // 新增這行來追蹤「下一題」按鈕的點擊
-  gtag('event', 'click', {
-    'event_category': 'interaction',
-    'event_label': 'next_question_button'
+    gtag('event', 'click', {
+      'event_category': 'interaction',
+      'event_label': 'next_question_button'
+    });
+    const mode = document.getElementById("mode").value;
+    generateQuestionByMode(mode);
+    document.getElementById("answerArea").textContent = "?";
   });
-  const mode = document.getElementById("mode").value;
-  generateQuestionByMode(mode);
-  document.getElementById("answerArea").textContent = "";
-});
+  
   document.getElementById("showBtn").addEventListener("click", ()=> {
-  document.getElementById("answerArea").textContent = currentAnswerText;
-    // 新增這行來追蹤「顯示答案」按鈕的點擊
-  gtag('event', 'click', {
-    'event_category': 'interaction',
-    'event_label': 'show_answer_button'
+    document.getElementById("answerArea").textContent = currentAnswerText;
+    gtag('event', 'click', {
+      'event_category': 'interaction',
+      'event_label': 'show_answer_button'
+    });
   });
-});
-generateQuestionByMode(document.getElementById("mode").value);
+  generateQuestionByMode(document.getElementById("mode").value);
   </script>
   <footer>
     <div class="footer-container">
