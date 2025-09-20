@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7WGQXFLPEN"></script>
   <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,7 +10,7 @@
   </script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>電阻器色碼與數字碼教育模擬器 v1.4</title>
+  <title>電阻器色碼與數字碼教育模擬器 v1.5</title>
   <style>
   body{font-family:Arial, "Noto Sans TC", sans-serif; margin:12px; color:#111;display: flex;
     flex-direction: column;
@@ -26,26 +25,6 @@
     position: relative;
     width: 130px;
     height: 70px;
-    /* 明亮的淺藍到深藍 */
-    /*background: linear-gradient(to bottom, #87CEFA, #4682B4);*/
-    /* 亮黃色到金棕色 */
-    /*background: linear-gradient(to bottom, #FFD700, #DAA520); */
-    /* 淺棕色到深棕色 */
-    /*background: linear-gradient(to bottom, #e0c090, #b07a40); */
-    /* 淺灰到深灰 */
-    /*background: linear-gradient(to bottom, #C0C0C0, #808080); */
-    /* 古銅色 */
-    /*background: linear-gradient(to bottom, #CD7F32, #8B4513);*/
-    /* 銀灰色 */
-    /*background: linear-gradient(to bottom, #C0C0C0, #708090);*/    
-    /* 薄荷綠 */
-    /*background: linear-gradient(to bottom, #98FF98, #6B8E23);*/
-    /* 薰衣草紫 */
-    /*background: linear-gradient(to bottom, #E6E6FA, #9370DB);*/
-    /* 藍寶石色 */
-    /*background: linear-gradient(to bottom, #1E90FF, #000080);*/
-    /* 翡翠綠 */
-    /*background: linear-gradient(to bottom, #3CB371, #006400);*/
     box-shadow: inset -5px -5px 8px rgba(0,0,0,0.18),
                 inset 5px 5px 8px rgba(255,255,255,0.18),
                 0 3px 8px rgba(0,0,0,0.12);
@@ -69,8 +48,8 @@
   .resistor .lead {
     position: absolute;
     width: 100px;
-    height: 20px; /* 引腳高度 */
-    background: linear-gradient(to bottom, #FFF, #AAA); /* #CCC, #999 */
+    height: 20px;
+    background: linear-gradient(to bottom, #FFF, #AAA);
     top: 50%;
     transform: translateY(-50%);
   }
@@ -93,13 +72,13 @@
     position: relative;
     width: 140px;
     height: 100px;
-    background: linear-gradient(to bottom,#888,#222); /*#666,#222*/
+    background: linear-gradient(to bottom,#888,#222);
     border-radius: 0px;
     display:inline-flex;
     justify-content:center;
     align-items:center;
     font-family:monospace;
-    font-size:48px; /*32px*/
+    font-size:48px;
     font-weight:700;
     color:#fff;
     text-shadow:0 1px 2px rgba(0,0,0,0.8);
@@ -110,30 +89,22 @@
     width:28px;
     height:100px;
     top:0;
-    background: linear-gradient(to bottom,#EEE,#AAA); /* #CCC, #999 */
+    background: linear-gradient(to bottom,#EEE,#AAA);
   }
   .smd::before{ left:-28px; border-radius:3px 0 0 3px; }
   .smd::after{ right:-28px; border-radius:0 3px 3px 0; }
 
+  /* 統一為直立排版樣式 */
   .answer-area { min-height:36px; font-weight:600; color:#0b5cff; margin:8px 0; }
   .layout { display:flex; flex-direction:column; align-items:center; gap:10px; }
   .controls { display:flex; gap:10px; }
   button { padding:8px 14px; font-size:16px; border-radius:8px; border:none; background:#0b5cff; color:#fff; cursor:pointer; }
-
-  @media (orientation:portrait){
-    .layout{ flex-direction:column; align-items:center; }
-    .controls{ flex-direction:row; }
-  }
-  @media (orientation:landscape){
-    .layout{ flex-direction:row; align-items:center; justify-content:center; gap:18px; }
-    .controls{ flex-direction:column; }
-    .answer-area{ min-width:220px; text-align:right; }
-  }
+  
   /* CSS 樣式 */
   .header-container {
     display: flex;
-    align-items: center; /* 垂直置中對齊 */
-    gap: 10px; /* logo 和標題之間的間距 */
+    align-items: center;
+    gap: 10px;
     justify-content: center;
     width: 100%;
   }
@@ -144,13 +115,13 @@
     width: 100%;
     margin-top: 30px;
     padding: 20px 10px;
-    background-color: #f8f8f8; /* 淺灰色背景，讓頁腳更突出 */
-    border-top: 1px solid #ddd; /* 頂部邊框線，視覺上與主體區隔 */
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
     text-align: left;
   }
 
   .footer-container {
-    max-width: 800px; /* 限制頁腳內容最大寬度 */
+    max-width: 800px;
     margin: 0 auto;
   }
   
@@ -158,25 +129,22 @@
 
   /* 社群媒體區塊樣式 */
   .social-media {
-    margin: 10px 0; /* 在上下方增加一些間距 */
-    text-align: center; /* 讓整個區塊置中 */
+    margin: 10px 0;
+    text-align: center;
   }
-  /* 確保社群媒體圖標連結沒有下劃線 */
   .social-media a { text-decoration: none; }
-  /* 社群媒體圖標樣式 */
   .social-icon {
-    width: 40px; /* 設定圖片寬度 */
-    height: 40px; /* 設定圖片高度 */
-    margin: 0 10px; /* 圖片之間的間距 */
-    transition: transform 0.2s ease-in-out; /* 增加滑鼠懸停時的動態效果 */
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+    transition: transform 0.2s ease-in-out;
   }
-  /* 滑鼠懸停時的效果 */
   .social-icon:hover {
-    transform: scale(1.1); /* 放大圖標 */
+    transform: scale(1.1);
   }
 
   .copyright {
-    text-align: center; /* 覆寫父層設定，讓此區塊內容置中 */
+    text-align: center;
   } 
   .copyright p { font-size: 12px; color: #888; margin: 0; }
   </style>
@@ -184,7 +152,7 @@
 <body> 
   <div class="header-container">
     <img src="Logo_RockBee1.png" alt="Logo" class="logo">
-    <h1>電阻器色碼與數字碼教育模擬器 v1.4</h1>
+    <h1>電阻器色碼與數字碼教育模擬器 v1.5</h1>
   </div>
   <div>
     <select id="mode">
@@ -217,18 +185,18 @@
   
   // IEC 60757 //
   const IEC_60757_COLORS = {
-    "0": "#000000",   // 黑色
-    "1": "#996633",   // 棕色
-    "2": "#FF0000",   // 紅色
-    "3": "#FFA500",   // 橘色
-    "4": "#FFFF00",   // 黃色
-    "5": "#00FF00",   // 綠色
-    "6": "#0000FF",   // 藍色
-    "7": "#FF00FF",   // 紫色
-    "8": "#969696",   // 灰色
-    "9": "#FFFFFF",   // 白色
-    "gold": "#FFD700",    // 金色
-    "silver": "#C0C0C0"   // 銀色
+    "0": "#000000",
+    "1": "#996633",
+    "2": "#FF0000",
+    "3": "#FFA500",
+    "4": "#FFFF00",
+    "5": "#00FF00",
+    "6": "#0000FF",
+    "7": "#FF00FF",
+    "8": "#969696",
+    "9": "#FFFFFF",
+    "gold": "#FFD700",
+    "silver": "#C0C0C0"
   };
   
   function formatValueNice(v){
@@ -304,20 +272,20 @@
       if (mode === "E24-4band") {
           toleranceColorCode = IEC_60757_COLORS.gold;
       } else if (mode === "E48-5band") {
-          toleranceColorCode = IEC_60757_COLORS["2"]; // 紅色
+          toleranceColorCode = IEC_60757_COLORS["2"];
       } else if (mode === "E96-5band") {
-          toleranceColorCode = IEC_60757_COLORS["1"]; // 棕色
+          toleranceColorCode = IEC_60757_COLORS["1"];
       }
       bandColors.push(toleranceColorCode);
 
       const res = document.createElement("div");
       res.className = "resistor";
       if (seriesKey === "E24") {
-        res.style.background = 'linear-gradient(to bottom, #e0c090, #b07a40)'; // 淺棕色
+        res.style.background = 'linear-gradient(to bottom, #e0c090, #b07a40)';
       } else if (seriesKey === "E48") {
-        res.style.background = 'linear-gradient(to bottom, #87CEFA, #4682B4)'; // 淺藍色
+        res.style.background = 'linear-gradient(to bottom, #87CEFA, #4682B4)';
       } else if (seriesKey === "E96") {
-        res.style.background = 'linear-gradient(to bottom, #E6E6FA, #9370DB)'; // 薰衣草紫色
+        res.style.background = 'linear-gradient(to bottom, #E6E6FA, #9370DB)';
       }
       
       area.appendChild(res);
